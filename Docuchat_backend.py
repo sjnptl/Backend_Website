@@ -395,6 +395,11 @@ async def create_chat_message(
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="error")
 
 
+@app.get("/")
+def health():
+    return {"status": "alive"}
+
+
 @app.get("/documents")
 async def get_available_documents():
     """
@@ -480,7 +485,3 @@ async def uploadtos3(data_file: UploadFile):
     return JSONResponse(content=response)
 
 
-import uvicorn
-if __name__=="__main__":
-    port = int(os.environ.get("PORT", 8080))
-    uvicorn.run(app, host="0.0.0.0", port=port)

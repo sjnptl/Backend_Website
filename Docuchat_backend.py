@@ -386,13 +386,14 @@ async def create_chat_message(
                     "session_id": str(chats.session_id),
                 }
             )
-    except Exception:
+    except Exception as e:
         print(traceback.format_exc())
 
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(exc_type, fname, exc_tb.tb_lineno)
-        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="error")
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
 
 
 @app.get("/")

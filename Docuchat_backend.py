@@ -482,4 +482,5 @@ async def uploadtos3(data_file: UploadFile):
 
 import uvicorn
 if __name__=="__main__":
-    uvicorn.run(app)
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)

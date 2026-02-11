@@ -21,3 +21,4 @@ streamlit
 langchain_text_splitters
 langchain-core
 python-multipart
+pypdf

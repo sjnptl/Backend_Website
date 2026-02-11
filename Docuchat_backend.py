@@ -295,7 +295,7 @@ app = FastAPI()
 # Add CORS middleware to handle Cross-Origin Resource Sharing
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow requests from any origin Ex, https://www.facebook.com
+    allow_origins=["https://sajan-patel.com"],
     allow_credentials=False,  # Allow sending credentials (e.g., cookies)
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all HTTP headers

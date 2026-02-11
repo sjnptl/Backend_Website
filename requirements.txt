@@ -1,4 +1,4 @@
-unstructured[all-docs]
+
 langchain
 openai
 fastapi

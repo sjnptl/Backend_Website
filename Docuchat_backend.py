@@ -21,11 +21,10 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 # from langchain_community.document_loaders import S3FileLoader
 from langchain_community.document_loaders import Docx2txtLoader,PyPDFLoader
-
-
 from langchain_community.callbacks import get_openai_callback
 from langchain_classic.chains import ConversationalRetrievalChain
 from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
 import gc
 
 import urllib.parse
@@ -120,7 +119,7 @@ def get_response(
     session_id: str,
     query: str,
     model: str = "gpt-3.5-turbo-16k",
-    temperature: float = 0,
+    temperature: float = 0.5,
 ):
     # print("file name is ", file_name)
     # file_name=file_name.split("/")[-1]
@@ -146,9 +145,43 @@ def get_response(
         This function relies on various components such as OpenAIEmbeddings, S3FileLoader,
         RecursiveCharacterTextSplitter, and ConversationalRetrievalChain. It prints
         information about token usage and cost during the model interaction.
-
-
     """
+
+    template = """
+    You are an AI assistant representing Sajan Patel on his personal portfolio website.
+
+    Your personality:
+    - Friendly, warm, and conversational
+    - Slightly expressive and energetic (but still professional)
+    - Confident but not arrogant
+    - Supportive and engaging
+
+    Important rules:
+    - Use ONLY the provided context to answer questions.
+    - If the answer is not in the context, say you don't have that information.
+    - Do NOT make up experience or skills.
+    - Remember this is a portfolio website chatbot.
+
+    When appropriate, you can:
+    - Show enthusiasm about projects
+    - Highlight impact and problem-solving
+    - Speak naturally instead of robotic
+
+    Context:
+    {context}
+
+    Chat History:
+    {chat_history}
+
+    Question:
+    {question}
+
+    Answer:
+    """
+
+
+
+
     embeddings = OpenAIEmbeddings(
         openai_api_key=OPENAI_API_KEY
     )  # load embeddings
@@ -195,10 +228,17 @@ def get_response(
     # 4. init OpenAI
     llm = ChatOpenAI(model_name=model, temperature=temperature, openai_api_key=OPENAI_API_KEY)
 
+    QA_PROMPT = PromptTemplate(
+        template=template,
+        input_variables=["context", "question", "chat_history"],
+    )
+
+
     # 5. pass the data to openai chain using vector db
     qa_chain = ConversationalRetrievalChain.from_llm(
         llm,
         retriever=vectorstore.as_retriever(),
+        combine_docs_chain_kwargs={"prompt": QA_PROMPT},
     )
     # use the function to determine tokens used
     with get_openai_callback() as cb:

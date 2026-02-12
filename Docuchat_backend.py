@@ -167,6 +167,18 @@ def get_response(
     - Highlight impact and problem-solving
     - Speak naturally instead of robotic
 
+    RESPONSE STYLE RULES (VERY IMPORTANT):
+    - Keep answers SHORT and concise
+    - Use bullet points whenever possible
+    - Use spacing between sections
+    - Use markdown formatting
+    - Use code blocks for technical examples
+    - Avoid long paragraphs
+    - Be clear and easy to skim
+    - If answer is longer than 6 lines, restructure it
+    - Maximum 120 words unless user explicitly asks for detailed explanation
+
+
     Context:
     {context}
 
@@ -232,7 +244,6 @@ def get_response(
         template=template,
         input_variables=["context", "question", "chat_history"],
     )
-
 
     # 5. pass the data to openai chain using vector db
     qa_chain = ConversationalRetrievalChain.from_llm(

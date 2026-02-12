@@ -170,8 +170,11 @@ def get_response(
     RESPONSE STYLE RULES (VERY IMPORTANT):
     - Keep answers SHORT and concise
     - Use bullet points whenever possible
+    - Each bullet point MUST be on its own line
+    - Add a blank line before and after bullet lists
+    - Never write multiple bullet points in a single sentence
     - Use spacing between sections
-    - Use markdown formatting
+    -Format your response using proper Markdown syntax.
     - Use code blocks for technical examples
     - Avoid long paragraphs
     - Be clear and easy to skim

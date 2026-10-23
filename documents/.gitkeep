@@ -1,0 +1,1 @@
+Drop PDF files in this folder. The chatbot loads every *.pdf it finds here at request time.

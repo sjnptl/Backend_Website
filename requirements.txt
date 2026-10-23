@@ -9,12 +9,12 @@ faiss-cpu
 fastapi
 uvicorn
 itsdangerous
-awswrangler
 html2text
 faiss-cpu
 pdf2image
 python-dotenv
 langchain-community
+langchain-classic
 docx2txt
 langchain_openai
 streamlit
@@ -22,3 +22,5 @@ langchain_text_splitters
 langchain-core
 python-multipart
 pypdf
+# Only needed if USE_S3=true (S3 document source, currently disabled)
+# awswrangler

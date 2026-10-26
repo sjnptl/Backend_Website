@@ -23,6 +23,9 @@ if os.name == "nt":  # Windows
     load_dotenv(".secrets.env")
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+# OpenAI retires models over time (gpt-3.5-turbo-16k stopped working Oct 2026).
+# Override with the OPENAI_MODEL env var on Railway to switch without a code change.
+OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-5.4-mini")
 MONGO_URL = os.environ.get("MONGO_URL")
 
 # Local folder the chatbot reads PDFs from. Drop reference docs here.
@@ -145,7 +148,7 @@ class ChatMessageSent(BaseModel):
 def get_response(
     session_id: str,
     query: str,
-    model: str = "gpt-3.5-turbo-16k",
+    model: str = OPENAI_MODEL,
     temperature: float = 0.5,
 ):
     template = """
